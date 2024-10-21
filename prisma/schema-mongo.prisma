@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/mongo"
+}
+
+datasource mongo {
+  provider = "mongodb"
+  url      = env("MONGO_URL")
+}
+
+// Users
+model User {
+  id        String   @id @default(auto()) @map("_id") @mongo.ObjectId
+  email     String   @unique
+  name      String
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+}
+
+// New File model
+model File {
+  id        String   @id @default(auto()) @map("_id") @mongo.ObjectId
+  name      String
+  size      Int
+  contentType String
+  url       String
+  productId String
+  stepId    Int?
+  subStepId Int?
+  systemGenerated Boolean? @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([name, productId])
+}
