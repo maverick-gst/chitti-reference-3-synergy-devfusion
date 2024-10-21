@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate --schema prisma/schema-psql.prisma && prisma generate --schema prisma/schema-mongo.prisma && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prisma": "prisma migrate dev --name init --schema prisma/schema-psql.prisma; npx prisma migrate dev --name init --schema prisma/schema-mongo.prisma"
   },
   "dependencies": {
     "@clerk/nextjs": "^5.7.5",
